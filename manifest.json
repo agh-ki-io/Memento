@@ -1,0 +1,10 @@
+{
+  "name": "Memento",
+  "version": "1.0",
+  "description": "Memento app",
+  "manifest_version": 2,
+
+  "page_action": {
+    "default_popup": "popup.html"
+  }
+}
