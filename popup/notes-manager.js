@@ -1,4 +1,3 @@
-
 /* initialise variables */
 const newFragmentMarker= "- ";
 const delimeter = "\n";
@@ -10,13 +9,14 @@ var inputBody = document.querySelector('.new-note textarea');
 
 var noteContainer = document.querySelector('.note-container');
 
-
 var clearBtn = document.querySelector('.clear');
+var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
+resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearAll);
 
 /* generic error handler */
@@ -48,15 +48,35 @@ function sendMessageToTabs(tabs) {
   for (let tab of tabs) {
     browser.tabs.sendMessage(
         tab.id,
-        {greeting: "selectedText"}
+        {type: "getSelectedText"}
     ).then(response => {
-      var output = response.response
-          .map((a)=>wrap(a))
-          .join(delimeter);
-      document.getElementById('textarea').value = output;
-      console.log(response.response);
+      var content;
+      if (response.selected.length !== 1) {
+        content = response.selected
+           .map((a) => wrap(a))
+           .join(delimeter);
+      } else {
+        content = response.selected[0];
+      }
+      document.getElementById('textarea').value = content;
+      document.getElementById('title').value = response.title;
     }).catch(onError);
   }
+}
+
+function reset() {
+  browser.tabs.query({
+    currentWindow: true,
+    active: true
+  }).then(tabs => {
+    for (let tab of tabs) {
+      browser.tabs.sendMessage(
+          tab.id,
+          {type: "resetSelectedText"}
+      )
+    }
+    document.getElementById('textarea').value = "";
+  }).catch(onError);
 }
 
 /* Add a note to the display, and storage */
