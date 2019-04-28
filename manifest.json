@@ -1,20 +1,16 @@
 {
-  "name": "Memento",
-  "version": "1.0",
-  "description": "Memento app",
-  "manifest_version": 2,
+    "manifest_version": 2,
+    "name": "selection-to-clipboard",
+    "description": "Example of WebExtensionAPI for writing to the clipboard",
+    "version": "1.0",
+    "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/selection-to-clipboard",
 
-  "page_action": {
-    "default_popup": "popup.html"
-  },
+    "icons": {
+        "48": "icons/clipboard-48.png"
+    },
 
-  "background": {
-    "scripts": ["extractor.js"],
-    "persistent": false
-  },
-
-  "permissions": [
-    "contextMenus",
-    "fileSystem"
-  ]
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content-script.js"]
+    }]
 }
