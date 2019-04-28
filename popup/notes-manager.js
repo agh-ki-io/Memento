@@ -1,4 +1,3 @@
-"use strict";
 
 /* initialise variables */
 
