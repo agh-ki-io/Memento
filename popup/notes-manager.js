@@ -6,18 +6,21 @@ const wrap = (str)=> newFragmentMarker+str;
 
 var inputTitle = document.querySelector('.new-note input');
 var inputBody = document.querySelector('.new-note textarea');
+var inputSelector = document.querySelector('.selector');
 
 var noteContainer = document.querySelector('.note-container');
 
 var clearBtn = document.querySelector('.clear');
 var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
+var selectorBtn = document.querySelector('.select');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
 resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearAll);
+selectorBtn.addEventListener('click', selectNotes);
 
 /* generic error handler */
 function onError(error) {
@@ -137,7 +140,7 @@ function displayNote(title, body) {
     const evtTgt = e.target;
     evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
     browser.storage.local.remove(title);
-  })
+  });
 
   /* create note edit box */
   var noteEdit = document.createElement('div');
@@ -173,19 +176,19 @@ function displayNote(title, body) {
   noteH.addEventListener('click',() => {
     noteDisplay.style.display = 'none';
     noteEdit.style.display = 'block';
-  })
+  });
 
   notePara.addEventListener('click',() => {
     noteDisplay.style.display = 'none';
     noteEdit.style.display = 'block';
-  }) 
+  });
 
   cancelBtn.addEventListener('click',() => {
     noteDisplay.style.display = 'block';
     noteEdit.style.display = 'none';
     noteTitleEdit.value = title;
     noteBodyEdit.value = body;
-  })
+  });
 
   updateBtn.addEventListener('click',() => {
     if(noteTitleEdit.value !== title || noteBodyEdit.value !== body) {
@@ -214,9 +217,38 @@ function updateNote(delNote,newTitle,newBody) {
 
 /* Clear all notes from the display/storage */
 
-function clearAll() {
+function selectNotes(){
+  hideNotes();
+  var selector = inputSelector.value;
+  var gettingItems = browser.storage.local.get();
+  gettingItems.then((result) => {
+    Object.keys(result).forEach(function(key) {
+      if(titleMatch(selector,key)){
+        displayNote(key,result[key]);
+      }
+    });
+  }, onError);
+}
+
+function titleMatch(title, noteTitle){
+  return noteTitle.toLowerCase().startsWith(title.toLowerCase());
+}
+
+function hideNotes(){
   while (noteContainer.firstChild) {
-      noteContainer.removeChild(noteContainer.firstChild);
+    noteContainer.removeChild(noteContainer.firstChild);
   }
+}
+
+function clearAll() {
+  hideNotes();
   browser.storage.local.clear();
+}
+
+function htmlCode(){
+  return'<head>' +
+      document.getElementsByTagName('head')[0].innerHTML +
+      '</head><body>' +
+      document.body.innerHTML +
+      '</body>';
 }
