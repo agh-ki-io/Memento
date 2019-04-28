@@ -1,5 +1,9 @@
 
 /* initialise variables */
+const newFragmentMarker= "- ";
+const delimeter = "\n";
+
+const wrap = (str)=> newFragmentMarker+str;
 
 var inputTitle = document.querySelector('.new-note input');
 var inputBody = document.querySelector('.new-note textarea');
@@ -46,7 +50,10 @@ function sendMessageToTabs(tabs) {
         tab.id,
         {greeting: "selectedText"}
     ).then(response => {
-      document.getElementById('textarea').value = response.response
+      var output = response.response
+          .map((a)=>wrap(a))
+          .join(delimeter);
+      document.getElementById('textarea').value = output;
       console.log(response.response);
     }).catch(onError);
   }
