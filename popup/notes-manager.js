@@ -1,3 +1,5 @@
+"use strict";
+
 /* initialise variables */
 
 var inputTitle = document.querySelector('.new-note input');
@@ -32,6 +34,23 @@ function initialize() {
       displayNote(noteKey,curValue);
     }
   }, onError);
+
+  browser.tabs.query({
+    currentWindow: true,
+    active: true
+  }).then(sendMessageToTabs).catch(onError);
+}
+
+function sendMessageToTabs(tabs) {
+  for (let tab of tabs) {
+    browser.tabs.sendMessage(
+        tab.id,
+        {greeting: "selectedText"}
+    ).then(response => {
+      document.getElementById('textarea').value = response.response
+      console.log(response.response);
+    }).catch(onError);
+  }
 }
 
 /* Add a note to the display, and storage */

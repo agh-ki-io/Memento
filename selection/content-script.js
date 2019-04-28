@@ -1,15 +1,19 @@
-/*
-copy the selected text to clipboard
-*/
+"use strict";
+
+var selectedText = "";
+
 function copySelection() {
-    var selectedText = window.getSelection().toString().trim();
+    selectedText = window.getSelection().toString().trim();
 
     if (selectedText) {
         document.execCommand("Copy");
     }
 }
 
-/*
-Add copySelection() as a listener to mouseup events.
-*/
+//Add copySelection() as a listener to mouseup events.
 document.addEventListener("mouseup", copySelection);
+
+browser.runtime.onMessage.addListener(request => {
+    console.log(request.greeting);
+    return Promise.resolve({response: selectedText});
+});
