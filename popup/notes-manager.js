@@ -117,7 +117,9 @@ function displayNote(title, body) {
     var noteDisplay = document.createElement('div');
     var noteH = document.createElement('h2');
     var notePara = document.createElement('p');
+
     var deleteBtn = document.createElement('button');
+    var editBtn = document.createElement('button');
     var clearFix = document.createElement('div');
 
     note.setAttribute('class', 'note');
@@ -128,10 +130,13 @@ function displayNote(title, body) {
     // notePara.textContent = body;
     deleteBtn.setAttribute('class', 'delete');
     deleteBtn.textContent = 'Delete note';
+    editBtn.setAttribute('class', 'edit');
+    editBtn.textContent = 'Edit note';
     clearFix.setAttribute('class', 'clearfix');
 
     noteDisplay.appendChild(noteH);
     noteDisplay.appendChild(notePara);
+    noteDisplay.appendChild(editBtn);
     noteDisplay.appendChild(deleteBtn);
     noteDisplay.appendChild(clearFix);
 
@@ -143,6 +148,11 @@ function displayNote(title, body) {
         const evtTgt = e.target;
         evtTgt.parentNode.parentNode.parentNode.removeChild(evtTgt.parentNode.parentNode);
         browser.storage.local.remove(title);
+    });
+
+    editBtn.addEventListener('click', (e) => {
+        noteDisplay.style.display = 'none';
+        noteEdit.style.display = 'block';
     });
 
     /* create note edit box */
