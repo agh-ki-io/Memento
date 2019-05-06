@@ -23,14 +23,13 @@ browser.runtime.onMessage.addListener(request => {
                 url: window.location.href,
                 date : window.Date(),
                 selected: selectedTextArray,
-                html:
-                    '<head>' +
-                        document.getElementsByTagName('head')[0].innerHTML +
-                    '</head>' +
-                    '<body>' +
-                        document.body.innerHTML +
-                    '</body>',
-                //jakos rozwiazac problem wielu zaznaczen
+                // html:
+                //     '<head>' +
+                //         document.getElementsByTagName('head')[0].innerHTML +
+                //     '</head>' +
+                //     '<body>' +
+                //         document.body.innerHTML +
+                //     '</body>',
                 // htmlNode : window.getSelection().anchorNode.parentElement.outerHTML,
             });
         default:

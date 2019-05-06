@@ -46,7 +46,9 @@ function initialize() {
         active: true
     }).then(sendMessageToTabs).catch(onError);
 }
+
 var lastSelectedTextData = {};
+
 function sendMessageToTabs(tabs) {
     for (let tab of tabs) {
         browser.tabs.sendMessage(
@@ -84,6 +86,7 @@ function reset() {
 }
 
 /* Add a note to the display, and storage */
+
 //okazuje sie ze klucz musi byc unikatowy
 function addNote() {
     var noteTitle = inputTitle.value;
@@ -125,9 +128,7 @@ function displayNote(title, body) {
     note.setAttribute('class', 'note');
 
     noteH.textContent = title;
-    // notePara.textContent = JSON.stringify(body);
     notePara.textContent = body.selected;
-    // notePara.textContent = body;
     deleteBtn.setAttribute('class', 'delete');
     deleteBtn.textContent = 'Delete note';
     editBtn.setAttribute('class', 'edit');
@@ -172,7 +173,7 @@ function displayNote(title, body) {
     noteEdit.appendChild(noteTitleEdit);
     noteTitleEdit.value = title;
     noteEdit.appendChild(noteBodyEdit);
-    noteBodyEdit.textContent = body;
+    noteBodyEdit.textContent = body.selected;
     noteEdit.appendChild(updateBtn);
     noteEdit.appendChild(cancelBtn);
 
@@ -214,19 +215,26 @@ function displayNote(title, body) {
 
 /* function to update notes */
 
-function updateNote(delNote, newTitle, newBody) {
-    var storingNote = browser.storage.local.set({[newTitle]: newBody});
-    storingNote.then(() => {
-        if (delNote !== newTitle) {
-            var removingNote = browser.storage.local.remove(delNote);
-            removingNote.then(() => {
-                displayNote(newTitle, newBody);
-            }, onError);
-        } else {
-            displayNote(newTitle, newBody);
+
+function updateNote(oldTitle, newTitle, newSelected) {
+    var storedNote = browser.storage.local.get(oldTitle);
+    storedNote.then((note) => {
+        if (note.newSelected !== note[oldTitle]) {
+            note[oldTitle].selected = newSelected
         }
-    }, onError);
-}
+        var title = oldTitle;
+        if (note.title !== newTitle) {
+            title = newTitle;
+            var removingNote = browser.storage.local.remove(oldTitle);
+            removingNote.then(() => {
+            }, onError);
+        }
+        var updatedNote = browser.storage.local.set({[title]: note[oldTitle]});
+        updatedNote.then(() => {
+            displayNote(title, note[oldTitle]);
+        })
+    })
+};
 
 function selectNotes() {
     hideNotes();
