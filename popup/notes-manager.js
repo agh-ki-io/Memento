@@ -250,7 +250,7 @@ function selectNotes() {
 }
 
 function titleMatch(title, noteTitle) {
-    return noteTitle.toLowerCase().startsWith(title.toLowerCase());
+    return noteTitle.toLowerCase().includes(title.toLowerCase());
 }
 
 /* Clear all notes from the display/storage */
