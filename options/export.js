@@ -1,9 +1,5 @@
-var exportBtn = document.querySelector('.export');
-var exportData = fetchData();
 
-exportBtn.addEventListener('click', export_notes);
-
-function export_notes() {
+function export_data(exportData) {
     var htmlContent = [exportData];
     var bl = new Blob(htmlContent, {type: "text/html"});
     var a = document.createElement("a");
@@ -11,17 +7,15 @@ function export_notes() {
     a.download = generateFileName();
     a.hidden = true;
     document.body.appendChild(a);
-    a.innerHTML = "something random - nobody will see this, it doesn't matter what you put here";
+    a.innerHTML = "";
     a.click();
 }
 
-function fetchData() {
-    var data = [];
+function export_notes() {
     browser.storage.local.get()
         .then((result) => {
-            data.push(JSON.stringify(result))
+            export_data([JSON.stringify(result)])
         }, onError);
-    return data;
 }
 
 function generateFileName() {
@@ -39,3 +33,5 @@ function generateFileName() {
 function onError(error) {
     console.log(error);
 }
+
+document.querySelector('.export').addEventListener('click', export_notes);

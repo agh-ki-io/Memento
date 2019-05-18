@@ -9,6 +9,10 @@
         "48": "icons/memo-note-48.png"
     },
 
+    "options_ui": {
+        "page": "options/options.html"
+    },
+
     "permissions": [
         "storage",
         "activeTab",
