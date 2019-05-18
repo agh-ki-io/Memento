@@ -5,10 +5,10 @@ Notes manager
 - [Documentation](#documentation)
 - [Features](#features)
 - [Usage](#usage)
-- [Author](#authors)
+- [Authors](#authors)
 
 ## Documentation
-https://docs.google.com/document/d/1bnOYBQ8bv_PaPWbsxxrTglHi4xXS-jNYJtvZfRWvjJg/edit?usp=sharing
+[Google Docs](https://docs.google.com/document/d/1bnOYBQ8bv_PaPWbsxxrTglHi4xXS-jNYJtvZfRWvjJg/edit?usp=sharing)
 
 ## Features
 
