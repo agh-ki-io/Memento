@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="notes-manager.css"/>
-  </head>
+</head>
 
 <body>
-  <div class="outer-wrapper">
+<div class="outer-wrapper">
     <div class="new-note">
-      <input id="title" type="text">
-      <textarea id="textarea"></textarea>
-      <button class="clear">Clear notes</button>
-      <button class="add">Add note</button>
-      <button class="reset">Reset</button>
-      <button class="select">Select</button>
-      <div class="clearfix"></div>
+        <input id="title" type="text">
+        <textarea id="textarea"></textarea>
+        <button class="clear">Clear notes</button>
+        <button class="add">Add note</button>
+        <button class="reset">Reset</button>
+        <button class="select">Select</button>
+        <div class="clearfix"></div>
     </div>
     <input class="selector" type="text">
+    <button class="export">Export</button>
     <div class="note-container">
- 
-    </div>
-  </div>
 
-  <script src="notes-manager.js"></script>
+    </div>
+</div>
+
+<script src="notes-manager.js"></script>
+<script src="export.js"></script>
 </body>
 
 </html>
