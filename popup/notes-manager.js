@@ -111,6 +111,16 @@ function storeNote(title, body) {
     }, onError);
 }
 
+/* function copy to clipboard */
+
+function updateClipboard(newClip) {
+    navigator.clipboard.writeText(newClip).then(function() {
+        /* clipboard successfully set */
+    }, function() {
+        console.error("Error update clipboard")
+    });
+}
+
 /* function to display a note in the note box */
 
 function displayNote(title, body) {
@@ -122,6 +132,7 @@ function displayNote(title, body) {
     var notePara = document.createElement('p');
 
     var deleteBtn = document.createElement('button');
+    var copyBtn = document.createElement('button');
     var editBtn = document.createElement('button');
     var clearFix = document.createElement('div');
 
@@ -133,11 +144,14 @@ function displayNote(title, body) {
     deleteBtn.textContent = 'Delete note';
     editBtn.setAttribute('class', 'edit');
     editBtn.textContent = 'Edit note';
+    copyBtn.setAttribute('class', 'copy');
+    copyBtn.textContent = 'Clipboard';
     clearFix.setAttribute('class', 'clearfix');
 
     noteDisplay.appendChild(noteH);
     noteDisplay.appendChild(notePara);
     noteDisplay.appendChild(editBtn);
+    noteDisplay.appendChild(copyBtn);
     noteDisplay.appendChild(deleteBtn);
     noteDisplay.appendChild(clearFix);
 
@@ -154,6 +168,10 @@ function displayNote(title, body) {
     editBtn.addEventListener('click', (e) => {
         noteDisplay.style.display = 'none';
         noteEdit.style.display = 'block';
+    });
+
+    copyBtn.addEventListener('click', (e) => {
+        updateClipboard("Dupa");
     });
 
     /* create note edit box */

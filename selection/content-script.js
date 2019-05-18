@@ -6,7 +6,7 @@ function copySelection() {
         if(selectedText.length > 1){
             selectedTextArray.push(selectedText)
         }
-        document.execCommand("Copy");
+        // document.execCommand("Copy"); // unnecessary
     }
 }
 
