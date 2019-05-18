@@ -23,12 +23,12 @@
         "js": ["selection/content-script.js"]
     }],
 
-    "sidebar_action": {
+    "browser_action": {
         "default_icon": {
             "32" : "icons/memo-note-32.png"
         },
         "default_title": "Memento",
-        "default_panel": "sidebar/notes-manager.html"
+        "default_popup": "popup/notes-manager.html"
     },
 
     "applications": {

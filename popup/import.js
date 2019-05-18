@@ -1,37 +1,23 @@
+let importBtn = document.querySelector('.import');
 
-var importBtn = document.querySelector('.import');
+importBtn.addEventListener("click", injectNote);
 
-importBtn.addEventListener("click", sendMessage);
-
-function handlePicked() {
-    displayFile(this.files);
-}
-
-function displayFile(fileList) {
-    var text;
-    var file = fileList[0];
-    var fr = new FileReader();
-    fr.onload = function(e) {
-        console.log(e.target["result"]);
-        text = e.target["result"];
-    };
-    fr.readAsText(file);
-}
-
-function sendMessage() {
+function injectNote() {
+    let content = "ala ma kota";
     browser.tabs.query({
         currentWindow: true,
         active: true
-    }).then(sendMessageToTabs).catch(onError);
+    }).then((tabs) => injectNoteFromActiveTab(tabs, content)).catch(onError);
+}
 
-
-    function sendMessageToTabs(tabs) {
-        for (let tab of tabs) {
-            browser.tabs.sendMessage(
-                tab.id,
-                {type: "importNote",
-                content: "content of file"}
-            )
-        }
+function injectNoteFromActiveTab(tabs, content) {
+    for (let tab of tabs) {
+        browser.tabs.sendMessage(
+            tab.id,
+            {
+                type: "importNote",
+                content: content
+            }
+        )
     }
 }
