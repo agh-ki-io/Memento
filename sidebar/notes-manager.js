@@ -1,6 +1,9 @@
 /* initialise variables */
 const newFragmentMarker = "- ";
 const delimeter = "\n";
+const settingsKey = 'settings@marker';
+const formatKey = 'settings@format';
+const reservedKeys = [settingsKey, formatKey];
 
 const wrap = (str) => newFragmentMarker + str;
 
@@ -123,6 +126,11 @@ function updateClipboard(newClip) {
 /* function to display a note in the note box */
 
 function displayNote(title, body) {
+
+    /* don't display settings as note */
+    if (reservedKeys.includes(title)) {
+        return;
+    }
 
     /* create note display box */
     var note = document.createElement('div');
