@@ -13,14 +13,13 @@ var noteContainer = document.querySelector('.note-container');
 var clearBtn = document.querySelector('.clear');
 var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
-var selectorBtn = document.querySelector('.select');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
 resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearAll);
-selectorBtn.addEventListener('click', selectNotes);
+inputSelector.addEventListener('input', selectNotes);
 
 /* generic error handler */
 function onError(error) {

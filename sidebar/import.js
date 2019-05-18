@@ -1,6 +1,8 @@
 
-const inputElement = document.getElementById("input");
-inputElement.addEventListener("change", handlePicked, false);
+// TO DO
+// use as inject
+// const inputElement = document.getElementById("input");
+// inputElement.addEventListener("change", handlePicked, false);
 
 function handlePicked() {
     displayFile(this.files);
