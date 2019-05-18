@@ -1,6 +1,9 @@
 /* initialise variables */
 const newFragmentMarker = "- ";
 const delimeter = "\n";
+const settingsKey = 'settings@marker';
+const formatKey = 'settings@format';
+const reservedKeys = [settingsKey, formatKey];
 
 const wrap = (str) => newFragmentMarker + str;
 
@@ -13,14 +16,13 @@ var noteContainer = document.querySelector('.note-container');
 var clearBtn = document.querySelector('.clear');
 var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
-var selectorBtn = document.querySelector('.select');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
 resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearAll);
-selectorBtn.addEventListener('click', selectNotes);
+inputSelector.addEventListener('input', selectNotes);
 
 /* generic error handler */
 function onError(error) {
@@ -124,6 +126,11 @@ function updateClipboard(newClip) {
 /* function to display a note in the note box */
 
 function displayNote(title, body) {
+
+    /* don't display settings as note */
+    if (reservedKeys.includes(title)) {
+        return;
+    }
 
     /* create note display box */
     var note = document.createElement('div');
@@ -250,6 +257,7 @@ function updateNote(oldTitle, newTitle, newSelected) {
         var updatedNote = browser.storage.local.set({[title]: note[oldTitle]});
         updatedNote.then(() => {
             displayNote(title, note[oldTitle]);
+            selectNotes();
         })
     })
 };
