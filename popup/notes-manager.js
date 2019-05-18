@@ -250,6 +250,7 @@ function updateNote(oldTitle, newTitle, newSelected) {
         var updatedNote = browser.storage.local.set({[title]: note[oldTitle]});
         updatedNote.then(() => {
             displayNote(title, note[oldTitle]);
+            selectNotes();
         })
     })
 };
