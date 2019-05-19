@@ -18,7 +18,7 @@ browser.runtime.onMessage.addListener(request => {
             selectedTextArray = [];
             break;
         case "importNote":
-            console.log(request);
+            // console.log(request);
             importNote(request);
             break;
         case 'getSelectedText':
@@ -64,14 +64,13 @@ function handlePicked() {
 function displayFile(fileList) {
 
     var text;
+    var marker;
     var file = fileList[0];
     var fr = new FileReader();
     fr.onload = function (e) {
-        console.log(e.target["result"]);
         const fileName = "test.txt";
-        // console.log(inputElement.value.split("/").pop());
         text = e.target["result"];
-        var htmlContent = [text + content];
+        var htmlContent = [text.replace(marker,content)];
         var bl = new Blob(htmlContent, {type: "text/html"});
         var a = document.createElement("a");
         a.href = URL.createObjectURL(bl);
@@ -81,5 +80,10 @@ function displayFile(fileList) {
         a.innerHTML = "something random - nobody will see this, it doesn't matter what you put here";
         a.click();
     };
-    fr.readAsText(file);
+    browser.storage.local.get("settings@marker")
+        .then((result) => {
+            marker = result["settings@marker"];
+            fr.readAsText(file);
+            }
+        );
 }
