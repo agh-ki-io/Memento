@@ -4,10 +4,29 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="notes-manager.css"/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 
 <body>
-<div class="outer-wrapper">
+
+<div id="sidenav" class="sidenav">
+    <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
+    <a href="#">About</a>
+    <a href="../options/options.html">Options</a>
+</div>
+
+
+<header id="header">
+    <button id="nav-button">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <h2>Memento</h2>
+</header>
+
+<div id="main" class="outer-wrapper">
     <div class="new-note">
         <input id="title" type="text">
         <textarea id="textarea"></textarea>
@@ -26,6 +45,7 @@
 
 <script src="notes-manager.js"></script>
 <script src="import.js"></script>
+<script src="tab-controller.js"></script>
 
 </body>
 
