@@ -10,7 +10,7 @@
     },
 
     "options_ui": {
-        "page": "options/options.html"
+        "page": "popup/options/options.html"
     },
 
     "permissions": [
@@ -32,7 +32,7 @@
             "32" : "icons/memo-note-32.png"
         },
         "default_title": "Memento",
-        "default_popup": "popup/notes-manager.html"
+        "default_popup": "popup/main-page/notes-manager.html"
     },
 
     "applications": {

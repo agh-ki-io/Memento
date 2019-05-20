@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../styles/notes-manager.css"/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div id="sidenav" class="sidenav">
+    <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
+    <a href="../main-page/notes-manager.html">Notes</a>
+    <a href="#">About</a>
+</div>
+
+
+<header id="header">
+    <button id="nav-button">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <h1>Memento</h1>
+</header>
+
+<h3>Marker template</h3>
+<label><input type="text" id="marker" style="width:30%">     <button class="set">Set...</button>     cSet new marker template.</label>
+<hr>
+<h3>Import notes</h3>
+<input type="file" id="input">
+<hr>
+<h3>Export notes</h3>
+<label><button class="export">Export...</button>     Export backup file.</label>
+
+<script src="import.js"></script>
+<script src="export.js"></script>
+<script src="marker.js"></script>
+<script src="../scripts/tab-controller.js"></script>
+
+
+</body>
+
+</html>
