@@ -19,26 +19,46 @@
 
 
 <header id="header">
-    <button id="nav-button">
+    <button id="nav-button" class="btn">
         <i class="fas fa-bars"></i>
     </button>
 
     <h1>Memento</h1>
 </header>
 
-<h3>Marker template</h3>
-<label><input type="text" id="marker" style="width:30%">     <button class="set">Set...</button>     cSet new marker template.</label>
-<hr>
-<h3>Import notes</h3>
-<input type="file" id="input">
-<hr>
-<h3>Export notes</h3>
-<label><button class="export">Export...</button>     Export backup file.</label>
+<main class="outer-wrapper">
+
+    <button class="collapsible">Open Collapsible</button>
+    <div class="content">
+        <h3>Marker template</h3>
+        <label>
+            <input type="text" id="marker" style="width:30%">
+            <button class="set">Set...</button>
+            Set new marker template.
+        </label>
+        <hr>
+        <h3>Import notes</h3>
+        <input type="file" id="input">
+        <hr>
+        <h3>Export notes</h3>
+        <label>
+            <button class="export">Export...</button>
+            Export backup file.
+        </label>
+    </div>
+
+    <button class="collapsible">Open Collapsible</button>
+    <div class="content">
+
+    </div>
+</main>
+
 
 <script src="import.js"></script>
 <script src="export.js"></script>
 <script src="marker.js"></script>
 <script src="../scripts/tab-controller.js"></script>
+<script src="../scripts/collapsible.js"></script>
 
 
 </body>
