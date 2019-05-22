@@ -47,3 +47,32 @@ $(".slides").sortable({
 
     },
 });
+
+const slides = document.getElementsByClassName("slides");
+const saveBtn = document.getElementById("saveNoteParameters");
+
+saveBtn.addEventListener('click', function(){
+
+    var lis = slides[0].getElementsByTagName("li");
+    var noteParameters = [];
+    for(let li of lis){
+        var input = li.getElementsByTagName("input")[0];
+        if(input.checked){
+            var id = input.getAttribute("id");
+            noteParameters.push(id);
+        }
+    }
+    console.log(noteParameters);
+    setNoteParameters(noteParameters);
+});
+
+const formatKey = 'settings@format';
+
+function setNoteParameters(noteParameters){
+    // console.log("siema");
+    browser.storage.local.set({[formatKey]: noteParameters}).then((r)=> {
+        // browser.storage.local.get(formatKey).then(function (result) {
+        //     console.log(result[formatKey]);
+        // });
+    })
+}

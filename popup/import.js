@@ -3,7 +3,7 @@ let importBtn = document.querySelector('.import');
 importBtn.addEventListener("click", injectNote);
 
 function injectNote() {
-    let content = "ala ma kota";
+    let content = "PlaceHolder for note";
     browser.tabs.query({
         currentWindow: true,
         active: true
