@@ -10,7 +10,7 @@
     },
 
     "options_ui": {
-        "page": "popup/options/options.html"
+        "page": "popup/options/hidden_options.html"
     },
 
     "permissions": [

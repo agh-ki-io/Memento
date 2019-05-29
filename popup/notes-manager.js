@@ -141,6 +141,8 @@ function displayNote(title, body) {
     var deleteBtn = document.createElement('button');
     var copyBtn = document.createElement('button');
     var editBtn = document.createElement('button');
+    var injectNoteBtn = document.createElement('button');
+    var clipboardNoteBtn = document.createElement('button');
     var clearFix = document.createElement('div');
 
     note.setAttribute('class', 'note');
@@ -153,6 +155,8 @@ function displayNote(title, body) {
     editBtn.textContent = 'Edit note';
     copyBtn.setAttribute('class', 'copy');
     copyBtn.textContent = 'Clipboard';
+    injectNoteBtn.setAttribute('class','injectNote');
+    injectNoteBtn.textContent = 'Inject';
     clearFix.setAttribute('class', 'clearfix');
 
     noteDisplay.appendChild(noteH);
@@ -160,6 +164,7 @@ function displayNote(title, body) {
     noteDisplay.appendChild(editBtn);
     noteDisplay.appendChild(copyBtn);
     noteDisplay.appendChild(deleteBtn);
+    noteDisplay.appendChild(injectNoteBtn);
     noteDisplay.appendChild(clearFix);
 
     note.appendChild(noteDisplay);
@@ -178,8 +183,62 @@ function displayNote(title, body) {
     });
 
     copyBtn.addEventListener('click', (e) => {
-        updateClipboard("Dupa");
+        var noteSt = browser.storage.local.get(noteH.textContent);
+        var noteParametersSt = browser.storage.local.get(formatKey);
+        noteSt.then((note) => {
+                noteParametersSt.then((noteParameters) => {
+                        const formattedNote = noteWithChosenParameters(note[noteH.textContent], noteH.textContent, noteParameters[formatKey]);
+                        updateClipboard(formattedNote);
+                    }
+                );
+            }
+        );
     });
+
+    injectNoteBtn.addEventListener('click', (e) => {
+        var noteSt = browser.storage.local.get(noteH.textContent);
+        var noteParametersSt = browser.storage.local.get(formatKey);
+        noteSt.then((note) => {
+                noteParametersSt.then((noteParameters) => {
+                        const formattedNote = noteWithChosenParameters(note[noteH.textContent], noteH.textContent, noteParameters[formatKey]);
+                        updateClipboard(formattedNote);
+                    }
+                );
+            }
+        );
+    });
+
+    // let importBtn = document.querySelector('.import');
+
+    injectNoteBtn.addEventListener("click", injectNote);
+
+    function injectNote() {
+        var noteSt = browser.storage.local.get(noteH.textContent);
+        var noteParametersSt = browser.storage.local.get(formatKey);
+        noteSt.then((note) => {
+                noteParametersSt.then((noteParameters) => {
+                        const formattedNote = noteWithChosenParameters(note[noteH.textContent], noteH.textContent, noteParameters[formatKey]);
+                        browser.tabs.query({
+                            currentWindow: true,
+                            active: true
+                        }).then((tabs) => injectNoteFromActiveTab(tabs, formattedNote)).catch(onError);
+                    }
+                );
+            }
+        );
+    }
+
+    function injectNoteFromActiveTab(tabs, content) {
+        for (let tab of tabs) {
+            browser.tabs.sendMessage(
+                tab.id,
+                {
+                    type: "importNote",
+                    content: content
+                }
+            )
+        }
+    }
 
     /* create note edit box */
     var noteEdit = document.createElement('div');
@@ -237,6 +296,26 @@ function displayNote(title, body) {
     });
 }
 
+function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
+    var formattedNote = "";
+    console.log(noteBody);
+    for(let parametr of noteParameters){
+        console.log(parametr);
+        if(parametr.localeCompare("content") == 0){
+            for(let line of noteBody["selected"]){
+                formattedNote += '- ';
+                formattedNote += line.toString();
+                formattedNote += '\n';
+            }
+        }
+        else{
+            formattedNote += noteBody[parametr.toString()]
+        }
+        formattedNote += '\n';
+    }
+    console.log(formattedNote);
+    return formattedNote;
+}
 
 /* function to update notes */
 
