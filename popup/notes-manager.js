@@ -3,7 +3,8 @@ const newFragmentMarker = "- ";
 const delimeter = "\n";
 const settingsKey = 'settings@marker';
 const formatKey = 'settings@format';
-const reservedKeys = [settingsKey, formatKey];
+const templateKey = 'template@format';
+const reservedKeys = [settingsKey, formatKey, templateKey];
 
 const wrap = (str) => newFragmentMarker + str;
 
@@ -14,22 +15,32 @@ var inputSelector = document.querySelector('.selector');
 var noteContainer = document.querySelector('.note-container');
 
 var clearBtn = document.querySelector('.clear');
-var resetBtn = document.querySelector('.reset');
+//var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
-resetBtn.addEventListener('click', reset);
+//resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearAll);
 inputSelector.addEventListener('input', selectNotes);
-
+inputBody.addEventListener('input', saveTemplate);
+inputTitle.addEventListener('input', saveTemplate);
 /* generic error handler */
 function onError(error) {
     console.log(error);
 }
 
 /* display previously-saved stored notes on startup */
+
+function saveTemplate() {
+    browser.storage.local.set({[templateKey]: {
+        title: document.getElementById('title').value,
+        content: document.getElementById('textarea').value
+    }}).then((e) => {
+        console.log("send");
+    })
+}
 
 initialize();
 
@@ -57,21 +68,34 @@ function sendMessageToTabs(tabs) {
             tab.id,
             {type: "getSelectedText"}
         ).then(response => {
-            var content;
-            if (response.selected.length !== 1) {
-                content = response.selected
-                    .map((a) => wrap(a))
-                    .join(delimeter);
-            } else {
-                content = response.selected[0];
-            }
-            document.getElementById('textarea').value = content;
-            document.getElementById('title').value = response.title;
-            lastSelectedTextData = response;
+            var gettingItem = browser.storage.local.get(templateKey);
+            gettingItem.then((result) => {
+                var content = "";
+                var title = "";
+                if (result[templateKey] !== undefined && result[templateKey].content !== undefined && result[templateKey].content !== null && result[templateKey].content.length > 0) {
+                    content = result[templateKey].content;
+                    if (response.selected.length>0) {
+                        content += delimeter;
+                    }
+                }
+                if (result[templateKey] !== undefined && result[templateKey].title !== undefined && result[templateKey].title !== null && result[templateKey].title.length > 0) {
+                    title = result[templateKey].title;
+                }else {
+                    title = response.title;
+                }
+                if (response.selected.length>0){
+                    content += response.selected;
+                }
+                document.getElementById('textarea').value = content;
+                document.getElementById('title').value = title;
+                saveTemplate();
+                lastSelectedTextData = response;
+            }, onError);
         }).catch(onError);
     }
 }
 
+/*
 function reset() {
     browser.tabs.query({
         currentWindow: true,
@@ -86,6 +110,7 @@ function reset() {
         document.getElementById('textarea').value = "";
     }).catch(onError);
 }
+ */
 
 /* Add a note to the display, and storage */
 
@@ -139,10 +164,9 @@ function displayNote(title, body) {
     var notePara = document.createElement('p');
 
     var deleteBtn = document.createElement('button');
-    var copyBtn = document.createElement('button');
+    var clibboardBtn = document.createElement('button');
     var editBtn = document.createElement('button');
     var injectNoteBtn = document.createElement('button');
-    var clipboardNoteBtn = document.createElement('button');
     var clearFix = document.createElement('div');
 
     note.setAttribute('class', 'note');
@@ -153,8 +177,8 @@ function displayNote(title, body) {
     deleteBtn.textContent = 'Delete note';
     editBtn.setAttribute('class', 'edit');
     editBtn.textContent = 'Edit note';
-    copyBtn.setAttribute('class', 'copy');
-    copyBtn.textContent = 'Clipboard';
+    clibboardBtn.setAttribute('class', 'copy');
+    clibboardBtn.textContent = 'Clipboard';
     injectNoteBtn.setAttribute('class','injectNote');
     injectNoteBtn.textContent = 'Inject';
     clearFix.setAttribute('class', 'clearfix');
@@ -162,7 +186,7 @@ function displayNote(title, body) {
     noteDisplay.appendChild(noteH);
     noteDisplay.appendChild(notePara);
     noteDisplay.appendChild(editBtn);
-    noteDisplay.appendChild(copyBtn);
+    noteDisplay.appendChild(clibboardBtn);
     noteDisplay.appendChild(deleteBtn);
     noteDisplay.appendChild(injectNoteBtn);
     noteDisplay.appendChild(clearFix);
@@ -182,20 +206,7 @@ function displayNote(title, body) {
         noteEdit.style.display = 'block';
     });
 
-    copyBtn.addEventListener('click', (e) => {
-        var noteSt = browser.storage.local.get(noteH.textContent);
-        var noteParametersSt = browser.storage.local.get(formatKey);
-        noteSt.then((note) => {
-                noteParametersSt.then((noteParameters) => {
-                        const formattedNote = noteWithChosenParameters(note[noteH.textContent], noteH.textContent, noteParameters[formatKey]);
-                        updateClipboard(formattedNote);
-                    }
-                );
-            }
-        );
-    });
-
-    injectNoteBtn.addEventListener('click', (e) => {
+    clibboardBtn.addEventListener('click', (e) => {
         var noteSt = browser.storage.local.get(noteH.textContent);
         var noteParametersSt = browser.storage.local.get(formatKey);
         noteSt.then((note) => {
@@ -210,9 +221,7 @@ function displayNote(title, body) {
 
     // let importBtn = document.querySelector('.import');
 
-    injectNoteBtn.addEventListener("click", injectNote);
-
-    function injectNote() {
+    injectNoteBtn.addEventListener("click", (e) => {
         var noteSt = browser.storage.local.get(noteH.textContent);
         var noteParametersSt = browser.storage.local.get(formatKey);
         noteSt.then((note) => {
@@ -226,7 +235,7 @@ function displayNote(title, body) {
                 );
             }
         );
-    }
+    });
 
     function injectNoteFromActiveTab(tabs, content) {
         for (let tab of tabs) {
@@ -298,9 +307,7 @@ function displayNote(title, body) {
 
 function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
     var formattedNote = "";
-    console.log(noteBody);
     for(let parametr of noteParameters){
-        console.log(parametr);
         if(parametr.localeCompare("content") == 0){
             for(let line of noteBody["selected"]){
                 formattedNote += '- ';
