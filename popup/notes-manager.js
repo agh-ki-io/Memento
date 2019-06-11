@@ -363,11 +363,9 @@ function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
     for(let parametr of noteParameters){
         if(parametr.localeCompare("content") == 0){
             formattedNote += "Note:\n";
-            for(let line of noteBody["selected"]){
-                formattedNote += '  - ';
-                formattedNote += line.toString();
-                formattedNote += '\n';
-            }
+            formattedNote += '  ';
+            formattedNote += noteBody["selected"];
+            formattedNote += '\n';
         }
         else{
             if(parametr.localeCompare("title") == 0){
@@ -381,7 +379,6 @@ function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
             formattedNote += '\n';
         }
     }
-    console.log(formattedNote);
     return formattedNote;
 }
 
