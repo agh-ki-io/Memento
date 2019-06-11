@@ -234,6 +234,11 @@ function displayNote(title, body) {
                 noteParametersSt.then((noteParameters) => {
                         const formattedNote = noteWithChosenParameters(note[noteH.textContent], noteH.textContent, noteParameters[formatKey]);
                         updateClipboard(formattedNote);
+                        browser.notifications.create({
+                            "type":"basic",
+                            "title":"Info",
+                            "message": "Note injected to clipboard"
+                        });
                     }
                 );
             }
