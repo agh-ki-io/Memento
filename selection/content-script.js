@@ -70,7 +70,7 @@ function displayFile(fileList) {
     fr.onload = function (e) {
         const fileName = "test.txt";
         text = e.target["result"];
-        var htmlContent = [text.replace(marker,content)];
+        var htmlContent = [text.replace(marker,content+marker)];
         var bl = new Blob(htmlContent, {type: "text/html"});
         var a = document.createElement("a");
         a.href = URL.createObjectURL(bl);
