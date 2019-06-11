@@ -6,6 +6,25 @@ const formatKey = 'settings@format';
 const templateKey = 'template@format';
 const reservedKeys = [settingsKey, formatKey, templateKey];
 
+const forbidden_pages = [
+    "accounts-static.cdn.mozilla.net",
+    "accounts.firefox.com",
+    "addons.cdn.mozilla.net",
+    "addons.mozilla.org",
+    "api.accounts.firefox.com",
+    "content.cdn.mozilla.net",
+    "content.cdn.mozilla.net",
+    "discovery.addons.mozilla.org",
+    "input.mozilla.org",
+    "install.mozilla.org",
+    "oauth.accounts.firefox.com",
+    "profile.accounts.firefox.com",
+    "support.mozilla.org",
+    "sync.services.mozilla.com",
+    "testpilot.firefox.com",
+    "about:"
+];
+
 const wrap = (str) => newFragmentMarker + str;
 
 var noteContaineDisplayNoneIsOn = true;
@@ -238,6 +257,16 @@ function displayNote(title, body) {
     // let importBtn = document.querySelector('.import');
 
     injectNoteBtn.addEventListener("click", (e) => {
+        console.log(location.href);
+        // if(forbidden_pages.filter(page => window.location.includes(page)).length != 0){
+        //     browser.notifications.create({
+        //         "type":"basic",
+        //         "title":"Error",
+        //         "iconUrl": "icons/exclamation.png",
+        //         "message": "Cant inject note on this website"
+        //     });
+        //     return;
+        // }
         var noteSt = browser.storage.local.get(noteH.textContent);
         var noteParametersSt = browser.storage.local.get(formatKey);
         noteSt.then((note) => {
@@ -255,13 +284,23 @@ function displayNote(title, body) {
 
     function injectNoteFromActiveTab(tabs, content) {
         for (let tab of tabs) {
-            browser.tabs.sendMessage(
-                tab.id,
-                {
-                    type: "importNote",
-                    content: content
-                }
-            )
+            if(forbidden_pages.filter(page => tab.url.includes(page)).length == 0) {
+                browser.tabs.sendMessage(
+                    tab.id,
+                    {
+                        type: "importNote",
+                        content: content
+                    }
+                )
+            }
+            else{
+                browser.notifications.create({
+                    "type":"basic",
+                    "title":"Error",
+                    "iconUrl": "icons/exclamation.png",
+                    "message": "Can't inject note on this website"
+                });
+            }
         }
     }
 
