@@ -135,17 +135,33 @@ function addNote() {
     var gettingItem = browser.storage.local.get(noteTitle);
     gettingItem.then((result) => {
         var objTest = Object.keys(result);
-        if (objTest.length < 1 && noteTitle !== '' && noteBody !== '') {
+        if (objTest.length < 1 && noteTitle !== "" && noteBody.selected !== "") {
             storeNote(noteTitle, noteBody);
             resetTemplate();
-        }
-        else{
-            browser.notifications.create({
-                "type":"basic",
-                "title":"Error",
-                "iconUrl": "icons/exclamation.png",
-                "message": "There is already a note with this title: " + inputTitle.value
-            });
+        }else{
+            if (noteTitle === ""){
+                browser.notifications.create({
+                    "type":"basic",
+                    "title":"Error",
+                    "iconUrl": "icons/exclamation.png",
+                    "message": "Title is empty"
+                });
+            }else if (noteBody.selected === ""){
+                browser.notifications.create({
+                    "type":"basic",
+                    "title":"Error",
+                    "iconUrl": "icons/exclamation.png",
+                    "message": "Content is empty"
+                });
+            }else{
+                browser.notifications.create({
+                    "type":"basic",
+                    "title":"Error",
+                    "iconUrl": "icons/exclamation.png",
+                    "message": "There is already a note with this title: " + inputTitle.value
+                });
+            }
+
         }
     }, onError);
 }
