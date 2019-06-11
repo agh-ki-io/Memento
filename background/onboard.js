@@ -6,9 +6,10 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary, }) => {
 
     switch (reason) {
         case "install": {
-            browser.storage.local.set({[settingsKey]: defaultMarker});
             browser.storage.local.set({[formatKey]: ["title", "content"]});
-            browser.runtime.openOptionsPage()
+            browser.storage.local.set({[settingsKey]: defaultMarker}).then((e) =>{
+                browser.runtime.openOptionsPage();
+            });
         } break;
     }
 });
