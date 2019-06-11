@@ -152,6 +152,7 @@ function addNote() {
             storeNote(noteTitle, noteBody);
             inputTitle.value = '';
             inputBody.value = '';
+            saveTemplate
         }
         else{
             browser.notifications.create({
