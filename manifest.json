@@ -19,7 +19,8 @@
         "clipboardRead",
         "clipboardWrite",
         "tabs",
-        "<all_urls>"
+        "<all_urls>",
+        "notifications"
     ],
 
     "background": {

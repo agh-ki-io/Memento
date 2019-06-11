@@ -1,22 +1,21 @@
-var selectedTextArray = [];
+var selectedText = "";
 
 function copySelection() {
-    var selectedText = window.getSelection().toString().trim();
+    selectedText = window.getSelection().toString().trim();
+    /*
     if (selectedText) {
         if (selectedText.length > 1) {
             selectedTextArray.push(selectedText)
         }
         // document.execCommand("Copy"); // unnecessary
     }
+     */
 }
 
 document.addEventListener("mouseup", copySelection);
 
 browser.runtime.onMessage.addListener(request => {
     switch (request.type) {
-        case "resetSelectedText":
-            selectedTextArray = [];
-            break;
         case "importNote":
             // console.log(request);
             importNote(request);
@@ -26,7 +25,7 @@ browser.runtime.onMessage.addListener(request => {
                 title: document.title,
                 url: window.location.href,
                 date: window.Date(),
-                selected: selectedTextArray,
+                selected: selectedText,
                 // html:
                 //     '<head>' +
                 //         document.getElementsByTagName('head')[0].innerHTML +
