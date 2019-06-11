@@ -302,16 +302,24 @@ function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
     for(let parametr of noteParameters){
         console.log(parametr);
         if(parametr.localeCompare("content") == 0){
+            formattedNote += "Note:\n";
             for(let line of noteBody["selected"]){
-                formattedNote += '- ';
+                formattedNote += '  - ';
                 formattedNote += line.toString();
                 formattedNote += '\n';
             }
         }
         else{
-            formattedNote += noteBody[parametr.toString()]
+            if(parametr.localeCompare("title") == 0){
+                formattedNote +="Title:\n"
+            }
+            else if(parametr.localeCompare("date") == 0){
+                formattedNote +="Date:\n"
+            }
+            formattedNote += '  ';
+            formattedNote += noteBody[parametr.toString()];
+            formattedNote += '\n';
         }
-        formattedNote += '\n';
     }
     console.log(formattedNote);
     return formattedNote;

@@ -1,6 +1,58 @@
 const coll = document.getElementsByClassName("collapsible");
 let i;
 
+const formatKey = 'settings@format';
+const possibleAttributes = [
+    {
+        name: "title",
+        text: "Page Title"
+    },
+    {
+        name: "date",
+        text: "Date"
+    },
+    {
+        name: "content",
+        text: "Content"
+    }
+];
+
+function createSlide(title, checkboxValue, elementText) {
+    const slides = document.getElementsByClassName("slides")[0];
+    let checkbox = document.createElement('input');
+    let text = document.createElement('span');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.setAttribute('id', title);
+    checkbox.checked = checkboxValue;
+    text.setAttribute('class', 'checkbox-text');
+    text.textContent = elementText;
+    let li = document.createElement('li');
+    li.setAttribute('class', 'slide');
+    li.appendChild(checkbox);
+    li.appendChild(text);
+    slides.appendChild(li);
+}
+
+browser.storage.local.get(formatKey)
+    .then((r) => {
+            console.log(r[formatKey]);
+            for (const index in r[formatKey]) {
+                let attribute = r[formatKey][index];
+                possibleAttributes
+                    .filter(attr => attr.name == attribute)
+                    .forEach(attr =>
+                        createSlide(attr.name, true, attr.text)
+                    )
+            }
+            for (let index in possibleAttributes) {
+                let attribute = possibleAttributes[index];
+                if (!r[formatKey].includes(attribute.name)) {
+                    createSlide(attribute.name, false, attribute.text)
+                }
+            }
+        }
+    );
+
 for (i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function () {
         this.classList.toggle("active");
@@ -49,8 +101,8 @@ $(".slides").sortable({
 });
 
 const slides = document.getElementsByClassName("slides");
-const saveBtn = document.getElementById("saveNoteParameters");
 
+const saveBtn = document.getElementById("saveNoteParameters");
 saveBtn.addEventListener('click', function(){
 
     var lis = slides[0].getElementsByTagName("li");
@@ -65,8 +117,6 @@ saveBtn.addEventListener('click', function(){
     console.log(noteParameters);
     setNoteParameters(noteParameters);
 });
-
-const formatKey = 'settings@format';
 
 function setNoteParameters(noteParameters){
     // console.log("siema");
