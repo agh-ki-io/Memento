@@ -307,8 +307,6 @@ function displayNote(title, body) {
     cancelBtn.addEventListener('click', () => {
         noteDisplay.style.display = 'block';
         noteEdit.style.display = 'none';
-        noteTitleEdit.value = title;
-        noteBodyEdit.value = body;
     });
 
     updateBtn.addEventListener('click', () => {
