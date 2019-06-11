@@ -27,7 +27,7 @@
 </header>
 
 <div id="main" class="outer-wrapper">
-    <div class="new-note">
+    <div class="new-note content-container">
         <input id="title" type="text">
         <textarea id="textarea"></textarea>
         <button class="btn clear">Clear notes</button>
@@ -35,14 +35,18 @@
         <button class="btn reset">Reset</button>
         <div class="clearfix"></div>
     </div>
-    <label>Select</label>
-    <input class="selector" type="text">
-    <div class="note-container">
+    <div class="content-container">
+        <label>Select</label>
+        <input class="selector" type="text">
+        <button class="btn import">Import</button>
+    </div>
+    <div class="note-container content-container">
 
     </div>
 </div>
 
 <script src="../notes-manager.js"></script>
+<script src="../import.js"></script>
 <script src="../scripts/tab-controller.js"></script>
 
 </body>
