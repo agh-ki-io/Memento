@@ -101,6 +101,14 @@ function addNote() {
             inputBody.value = '';
             storeNote(noteTitle, noteBody);
         }
+        else{
+            browser.notifications.create({
+                "type":"basic",
+                "title":"Error",
+                "iconUrl": "icons/exclamation.png",
+                "message": "There is already a note with this title: " + inputTitle.value
+            });
+        }
     }, onError);
 }
 
@@ -376,7 +384,15 @@ function hideNotes() {
 
 function clearAll() {
     hideNotes();
-    browser.storage.local.clear();
+    browser.storage.local.get(formatKey).then((noteParameters) => {
+        browser.storage.local.get(settingsKey).then((settings) => {
+            browser.storage.local.clear().then((r) => {
+                browser.storage.local.set({[formatKey]: noteParameters[formatKey]}).then((a) => {
+                    browser.storage.local.set({[settingsKey]: settings[settingsKey]});
+                });
+            });
+        });
+    });
 }
 
 function htmlCode() {
