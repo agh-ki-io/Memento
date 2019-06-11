@@ -34,45 +34,47 @@
 <main class="outer-wrapper">
 
 
-<!--    <button class="collapsible">Backup</button>-->
-<!--    <div class="content">-->
-<!--        <h3>Marker template</h3>-->
-<!--        <label>-->
-<!--            <input type="text" id="marker" style="width:30%">-->
-<!--            <button class="set">Set...</button>-->
-<!--            Set new marker template.-->
-<!--        </label>-->
-<!--        <hr>-->
-<!--        <h3>Import notes</h3>-->
-<!--        <input type="file" id="input">-->
-<!--        <hr>-->
-<!--        <h3>Export notes</h3>-->
-<!--        <label>-->
-<!--            <button class="export">Export...</button>-->
-<!--            Export backup file.-->
-<!--        </label>-->
-<!--    </div>-->
+    <!--    <button class="collapsible">Backup</button>-->
+    <!--    <div class="content">-->
+    <!--        <h3>Marker template</h3>-->
+    <!--        <label>-->
+    <!--            <input type="text" id="marker" style="width:30%">-->
+    <!--            <button class="set">Set...</button>-->
+    <!--            Set new marker template.-->
+    <!--        </label>-->
+    <!--        <hr>-->
+    <!--        <h3>Import notes</h3>-->
+    <!--        <input type="file" id="input">-->
+    <!--        <hr>-->
+    <!--        <h3>Export notes</h3>-->
+    <!--        <label>-->
+    <!--            <button class="export">Export...</button>-->
+    <!--            Export backup file.-->
+    <!--        </label>-->
+    <!--    </div>-->
 
-    <button class="collapsible">Notes parameters</button>
-    <div class="content">
-        <div>
-            Choose parameter that will be inject to your note
+    <div class="content-container">
+        <button class="btn collapsible">Notes parameters</button>
+        <div class="content">
+            <div>
+                Choose parameter that will be inject to your note
+            </div>
+            <ul class="slides">
+                <li class="slide">
+                    <input type="checkbox" id="title" checked/>
+                    <span class="checkbox-text">Page title </span>
+                </li>
+                <li class="slide">
+                    <input type="checkbox" id="date"/>
+                    <span class="checkbox-text">Date </span>
+                </li>
+                <li class="slide">
+                    <input type="checkbox" id="content"/>
+                    <span class="checkbox-text">Content</span>
+                </li>
+            </ul>
+            <button id="saveNoteParameters" class="btn">Save</button>
         </div>
-        <ul class="slides">
-            <li class="slide">
-                <input type="checkbox" id="title" checked/>
-                <span class="checkbox-text">Page title </span>
-            </li>
-            <li class="slide">
-                <input type="checkbox" id="date"/>
-                <span class="checkbox-text">Date </span>
-            </li>
-            <li class="slide">
-                <input type="checkbox" id="content"/>
-                <span class="checkbox-text">Content</span>
-            </li>
-        </ul>
-        <button id="saveNoteParameters">Save</button>
     </div>
 </main>
 

@@ -249,9 +249,9 @@ function displayNote(title, body) {
     var updateBtn = document.createElement('button');
     var cancelBtn = document.createElement('button');
 
-    updateBtn.setAttribute('class', 'update');
+    updateBtn.setAttribute('class', 'btn update');
     updateBtn.textContent = 'Update note';
-    cancelBtn.setAttribute('class', 'cancel');
+    cancelBtn.setAttribute('class', 'btn cancel');
     cancelBtn.textContent = 'Cancel update';
 
     noteEdit.appendChild(noteTitleEdit);
