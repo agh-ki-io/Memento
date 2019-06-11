@@ -119,10 +119,11 @@ saveBtn.addEventListener('click', function(){
 });
 
 function setNoteParameters(noteParameters){
-    // console.log("siema");
     browser.storage.local.set({[formatKey]: noteParameters}).then((r)=> {
-        // browser.storage.local.get(formatKey).then(function (result) {
-        //     console.log(result[formatKey]);
-        // });
+        browser.notifications.create({
+            "type":"basic",
+            "title":"Info",
+            "message": "Set parameters"
+        });
     })
 }
