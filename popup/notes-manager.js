@@ -379,12 +379,13 @@ function hideNotes() {
         noteContainer.removeChild(noteContainer.firstChild);
     }
 
-    hideNotes()
 }
 
 function clearAll() {
     hideNotes();
     browser.storage.local.clear();
+    hideNotesDisplay()
+
 }
 
 function htmlCode() {
