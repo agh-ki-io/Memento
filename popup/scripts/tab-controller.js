@@ -6,3 +6,8 @@ document.getElementById("nav-button").addEventListener("click", function () {
 document.getElementById("closebtn").addEventListener("click", function () {
     document.getElementById("sidenav").style.width = "0";
 });
+
+
+document.getElementById("settings").addEventListener("click", function () {
+    browser.runtime.openOptionsPage()
+});
