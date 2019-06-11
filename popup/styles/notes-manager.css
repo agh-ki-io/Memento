@@ -41,11 +41,11 @@ input, textarea, button {
     border-radius: 3px;
 }
 
-.btn {
+button {
     background-image: linear-gradient(180deg, #5347c2, #5347c2);
     color: #fff !important;
     font-weight: 500;
-    padding: 10px;
+    padding: 5px 10px;
     text-transform: uppercase;
     border-radius: 10px;
     display: inline-block;
@@ -53,7 +53,7 @@ input, textarea, button {
     border-color: #5347c2;
 }
 
-.btn:hover {
+button:hover {
     color: #404040 !important;
     font-weight: 100 !important;
     letter-spacing: 1px;
@@ -213,7 +213,7 @@ header h1 {
 }
 
 .collapsible {
-    background-color: #ddd;
+    /*background-color: #ddd;*/
     color: #444;
     cursor: pointer;
     padding: 18px;
@@ -226,14 +226,14 @@ header h1 {
 }
 
 .active, .collapsible:hover {
-    background-color: #ccc;
+    /*background-color: #ccc;*/
 }
 
 .content {
     padding: 10px 18px;
     display: none;
     overflow: hidden;
-    background-color: #f1f1f1;
+    /*background-color: #f1f1f1;*/
 }
 
 .content div {
@@ -285,9 +285,9 @@ input[type=checkbox] {
 }
 
 .fas {
-    color: #dabdff;
+    /*color: #dabdff;*/
 }
 
 #nav-button {
-    /*background-image: linear-gradient(180deg,#fafafe,#fafafe);*/
+    padding: 10px;
 }

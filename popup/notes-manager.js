@@ -7,6 +7,9 @@ const reservedKeys = [settingsKey, formatKey];
 
 const wrap = (str) => newFragmentMarker + str;
 
+var noteContaineDisplayNoneIsOn = true;
+
+
 var inputTitle = document.querySelector('.new-note input');
 var inputBody = document.querySelector('.new-note textarea');
 var inputSelector = document.querySelector('.selector');
@@ -91,6 +94,9 @@ function reset() {
 
 //okazuje sie ze klucz musi byc unikatowy
 function addNote() {
+
+    showDisplayOfNotes()
+
     var noteTitle = inputTitle.value;
     var noteBody = lastSelectedTextData;
     var gettingItem = browser.storage.local.get(noteTitle);
@@ -257,9 +263,9 @@ function displayNote(title, body) {
     var updateBtn = document.createElement('button');
     var cancelBtn = document.createElement('button');
 
-    updateBtn.setAttribute('class', 'update');
+    updateBtn.setAttribute('class', 'btn update');
     updateBtn.textContent = 'Update note';
-    cancelBtn.setAttribute('class', 'cancel');
+    cancelBtn.setAttribute('class', 'btn cancel');
     cancelBtn.textContent = 'Cancel update';
 
     noteEdit.appendChild(noteTitleEdit);
@@ -380,6 +386,7 @@ function hideNotes() {
     while (noteContainer.firstChild) {
         noteContainer.removeChild(noteContainer.firstChild);
     }
+
 }
 
 function clearAll() {
@@ -393,6 +400,8 @@ function clearAll() {
             });
         });
     });
+    hideNotesDisplay()
+
 }
 
 function htmlCode() {
@@ -401,4 +410,18 @@ function htmlCode() {
         '</head><body>' +
         document.body.innerHTML +
         '</body>';
+}
+
+function showDisplayOfNotes() {
+    if (noteContaineDisplayNoneIsOn) {
+        noteContaineDisplayNoneIsOn = false;
+        document.getElementById("note-container").style.display = '';
+    }
+}
+
+function hideNotesDisplay() {
+    if (!noteContaineDisplayNoneIsOn) {
+        noteContaineDisplayNoneIsOn = true;
+        document.getElementById("note-container").style.display = 'none';
+    }
 }
