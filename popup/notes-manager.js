@@ -120,7 +120,7 @@ function reset() {
 //okazuje sie ze klucz musi byc unikatowy
 function addNote() {
 
-    showDisplayOfNotes()
+    // showDisplayOfNotes();
 
     var noteTitle = inputTitle.value;
     var noteBody = lastSelectedTextData;
@@ -407,7 +407,7 @@ function clearAll() {
             });
         });
     });
-    hideNotesDisplay()
+    // hideNotesDisplay()
 
 }
 
