@@ -10,7 +10,8 @@ Notes manager
 ## Documentation
 [Google Docs](https://docs.google.com/document/d/1bnOYBQ8bv_PaPWbsxxrTglHi4xXS-jNYJtvZfRWvjJg/edit?usp=sharing)
 
-## Features
+## User Documentation
+[Google Docs](https://docs.google.com/document/d/184D6OA1ft1ZRZm3LwbMQywdEUtJ61AwRN-wfxrYLfrI/edit#)
 
 ## Usage
 1. Open Firefox and load `about:debugging` in the URL bar. Click the Load Temporary Add-on button and select the `manifest.json` file within the directory of an example extension you'd like to install. 
