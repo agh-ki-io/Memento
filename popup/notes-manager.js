@@ -8,6 +8,9 @@ const reservedKeys = [settingsKey, formatKey, templateKey];
 
 const wrap = (str) => newFragmentMarker + str;
 
+var noteContaineDisplayNoneIsOn = true;
+
+
 var inputTitle = document.querySelector('.new-note input');
 var inputBody = document.querySelector('.new-note textarea');
 var inputSelector = document.querySelector('.selector');
@@ -116,6 +119,9 @@ function reset() {
 
 //okazuje sie ze klucz musi byc unikatowy
 function addNote() {
+
+    showDisplayOfNotes()
+
     var noteTitle = inputTitle.value;
     var noteBody = lastSelectedTextData;
     var gettingItem = browser.storage.local.get(noteTitle);
@@ -125,6 +131,14 @@ function addNote() {
             inputTitle.value = '';
             inputBody.value = '';
             storeNote(noteTitle, noteBody);
+        }
+        else{
+            browser.notifications.create({
+                "type":"basic",
+                "title":"Error",
+                "iconUrl": "icons/exclamation.png",
+                "message": "There is already a note with this title: " + inputTitle.value
+            });
         }
     }, onError);
 }
@@ -258,9 +272,9 @@ function displayNote(title, body) {
     var updateBtn = document.createElement('button');
     var cancelBtn = document.createElement('button');
 
-    updateBtn.setAttribute('class', 'update');
+    updateBtn.setAttribute('class', 'btn update');
     updateBtn.textContent = 'Update note';
-    cancelBtn.setAttribute('class', 'cancel');
+    cancelBtn.setAttribute('class', 'btn cancel');
     cancelBtn.textContent = 'Cancel update';
 
     noteEdit.appendChild(noteTitleEdit);
@@ -309,16 +323,24 @@ function noteWithChosenParameters(noteBody, noteTitle, noteParameters){
     var formattedNote = "";
     for(let parametr of noteParameters){
         if(parametr.localeCompare("content") == 0){
+            formattedNote += "Note:\n";
             for(let line of noteBody["selected"]){
-                formattedNote += '- ';
+                formattedNote += '  - ';
                 formattedNote += line.toString();
                 formattedNote += '\n';
             }
         }
         else{
-            formattedNote += noteBody[parametr.toString()]
+            if(parametr.localeCompare("title") == 0){
+                formattedNote +="Title:\n"
+            }
+            else if(parametr.localeCompare("date") == 0){
+                formattedNote +="Date:\n"
+            }
+            formattedNote += '  ';
+            formattedNote += noteBody[parametr.toString()];
+            formattedNote += '\n';
         }
-        formattedNote += '\n';
     }
     console.log(formattedNote);
     return formattedNote;
@@ -371,11 +393,22 @@ function hideNotes() {
     while (noteContainer.firstChild) {
         noteContainer.removeChild(noteContainer.firstChild);
     }
+
 }
 
 function clearAll() {
     hideNotes();
-    browser.storage.local.clear();
+    browser.storage.local.get(formatKey).then((noteParameters) => {
+        browser.storage.local.get(settingsKey).then((settings) => {
+            browser.storage.local.clear().then((r) => {
+                browser.storage.local.set({[formatKey]: noteParameters[formatKey]}).then((a) => {
+                    browser.storage.local.set({[settingsKey]: settings[settingsKey]});
+                });
+            });
+        });
+    });
+    hideNotesDisplay()
+
 }
 
 function htmlCode() {
@@ -384,4 +417,18 @@ function htmlCode() {
         '</head><body>' +
         document.body.innerHTML +
         '</body>';
+}
+
+function showDisplayOfNotes() {
+    if (noteContaineDisplayNoneIsOn) {
+        noteContaineDisplayNoneIsOn = false;
+        document.getElementById("note-container").style.display = '';
+    }
+}
+
+function hideNotesDisplay() {
+    if (!noteContaineDisplayNoneIsOn) {
+        noteContaineDisplayNoneIsOn = true;
+        document.getElementById("note-container").style.display = 'none';
+    }
 }
