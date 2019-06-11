@@ -37,13 +37,13 @@ var inputSelector = document.querySelector('.selector');
 var noteContainer = document.querySelector('.note-container');
 
 var clearBtn = document.querySelector('.clear');
-//var resetBtn = document.querySelector('.reset');
+var resetBtn = document.querySelector('.reset');
 var addBtn = document.querySelector('.add');
 
 /*  add event listeners to buttons */
 
 addBtn.addEventListener('click', addNote);
-//resetBtn.addEventListener('click', reset);
+resetBtn.addEventListener('click', resetTemplate);
 clearBtn.addEventListener('click', clearAll);
 inputSelector.addEventListener('input', selectNotes);
 inputBody.addEventListener('input', saveTemplate);
@@ -59,9 +59,7 @@ function saveTemplate() {
     browser.storage.local.set({[templateKey]: {
         title: document.getElementById('title').value,
         content: document.getElementById('textarea').value
-    }}).then((e) => {
-        console.log("send");
-    })
+    }});
 }
 
 initialize();
@@ -117,22 +115,11 @@ function sendMessageToTabs(tabs) {
     }
 }
 
-/*
-function reset() {
-    browser.tabs.query({
-        currentWindow: true,
-        active: true
-    }).then(tabs => {
-        for (let tab of tabs) {
-            browser.tabs.sendMessage(
-                tab.id,
-                {type: "resetSelectedText"}
-            )
-        }
-        document.getElementById('textarea').value = "";
-    }).catch(onError);
+function resetTemplate() {
+    inputTitle.value = '';
+    inputBody.value = '';
+    saveTemplate();
 }
- */
 
 /* Add a note to the display, and storage */
 
@@ -150,9 +137,7 @@ function addNote() {
         var objTest = Object.keys(result);
         if (objTest.length < 1 && noteTitle !== '' && noteBody !== '') {
             storeNote(noteTitle, noteBody);
-            inputTitle.value = '';
-            inputBody.value = '';
-            saveTemplate
+            resetTemplate();
         }
         else{
             browser.notifications.create({
@@ -258,7 +243,6 @@ function displayNote(title, body) {
     // let importBtn = document.querySelector('.import');
 
     injectNoteBtn.addEventListener("click", (e) => {
-        console.log(location.href);
         // if(forbidden_pages.filter(page => window.location.includes(page)).length != 0){
         //     browser.notifications.create({
         //         "type":"basic",
