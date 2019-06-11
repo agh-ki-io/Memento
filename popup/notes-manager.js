@@ -124,13 +124,15 @@ function addNote() {
 
     var noteTitle = inputTitle.value;
     var noteBody = lastSelectedTextData;
+    noteBody.selected = inputBody.value;
+    noteBody.title = inputTitle.value;
     var gettingItem = browser.storage.local.get(noteTitle);
     gettingItem.then((result) => {
         var objTest = Object.keys(result);
         if (objTest.length < 1 && noteTitle !== '' && noteBody !== '') {
+            storeNote(noteTitle, noteBody);
             inputTitle.value = '';
             inputBody.value = '';
-            storeNote(noteTitle, noteBody);
         }
         else{
             browser.notifications.create({
