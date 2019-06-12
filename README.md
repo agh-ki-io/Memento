@@ -9,13 +9,16 @@ Notes manager
 
 ## Documentation
 ### Project Documentation
-[Google Docs](https://docs.google.com/document/d/1bnOYBQ8bv_PaPWbsxxrTglHi4xXS-jNYJtvZfRWvjJg/edit?usp=sharing)
+- [Pdf File](https://github.com/agh-ki-io/Memento/blob/master/docs/Memento_Dokumentacja_Projektowa.pdf)
+- [Google Docs](https://docs.google.com/document/d/1bnOYBQ8bv_PaPWbsxxrTglHi4xXS-jNYJtvZfRWvjJg/edit?usp=sharing)
 
 ### User Documentation
-[Google Docs](https://docs.google.com/document/d/184D6OA1ft1ZRZm3LwbMQywdEUtJ61AwRN-wfxrYLfrI/edit#)
+- [Pdf File](https://github.com/agh-ki-io/Memento/blob/master/docs/Memento_Dokumentacja_Uzytkownika.pdf)
+- [Google Docs](https://docs.google.com/document/d/184D6OA1ft1ZRZm3LwbMQywdEUtJ61AwRN-wfxrYLfrI/edit#)
 
 ### Developer Documentation
-[Google Docs](https://docs.google.com/document/d/1t9c8OAiDiz5X3maa0u-X543da2ZnTOA7ITRXUQMaoBc/edit?fbclid=IwAR1c1Ph8449e1aiko6jGdWyOWJtblK9oKWHmgxTByaYk0y3SD4PEr-T7WdI)
+- [Pdf File](https://github.com/agh-ki-io/Memento/blob/master/docs/Memento_Dokumentacja_Deweloperska.pdf)
+- [Google Docs](https://docs.google.com/document/d/1t9c8OAiDiz5X3maa0u-X543da2ZnTOA7ITRXUQMaoBc/edit?fbclid=IwAR1c1Ph8449e1aiko6jGdWyOWJtblK9oKWHmgxTByaYk0y3SD4PEr-T7WdI)
 
 ## Instalation
 ### User instalation
